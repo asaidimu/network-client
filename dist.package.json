@@ -1,0 +1,33 @@
+{
+  "name": "@saidimu/network-client",
+  "version": "1.0.0",
+  "description": "A lightweight, type-safe HTTP client for browser environments",
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "index.d.mts",
+    "index.mjs"
+  ],
+  "keywords": [
+    "http",
+    "client",
+    "fetch",
+    "typescript",
+    "browser"
+  ],
+  "author": "saidimu",
+  "repository": "git@github.com:asaidimu/network-client.git",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest",
+    "access": "public"
+  }
+}
+

@@ -1,0 +1,53 @@
+{
+  "name": "@saidimu/network-client",
+  "version": "1.0.0",
+  "description": "A lightweight, type-safe HTTP client for browser environments",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "ci": "bun install",
+    "clean": "[ -e ./dist ] && rm -rf ./dist || echo No dist",
+    "prebuild": "bun clean",
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "postbuild": "cp README.md LICENSE.md ./dist && cp ./dist.package.json ./dist/package.json"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "tsup": "^7.0.0"
+  },
+    "release": {
+        "branches": [
+            "main"
+        ],
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            [
+                "@semantic-release/changelog",
+                {
+                    "changelogFile": "CHANGELOG.md"
+                }
+            ],
+            [
+                "@semantic-release/npm",
+                {
+                    "pkgRoot": "dist"
+                }
+            ],
+            [
+                "@semantic-release/git",
+                {
+                    "assets": [
+                        "CHANGELOG.md",
+                        "dist.package.json"
+                    ],
+                    "message": "chore(release): Release v${nextRelease.version}\n\n${nextRelease.notes}"
+                }
+            ]
+        ]
+    }
+}
