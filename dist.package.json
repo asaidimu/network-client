@@ -1,5 +1,5 @@
 {
-  "name": "@saidimu/network-client",
+  "name": "@asaidimu/network-client",
   "version": "1.0.0",
   "description": "A lightweight, type-safe HTTP client for browser environments",
   "main": "index.js",
