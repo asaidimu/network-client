@@ -1,4 +1,4 @@
-import {ApiResponse, BodyOptions, createNetworkClient, HttpMethod, RequestOptions, type NetworkClient, type NetworkClientConfig} from "./index"
+import {type ApiResponse, type BodyOptions, createNetworkClient, type HttpMethod, type RequestOptions, type NetworkClient, type NetworkClientConfig} from "./index"
 // SDK Base Class for easy inheritance
 export abstract class BaseSDK {
   protected client: NetworkClient;

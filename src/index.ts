@@ -1,7 +1,7 @@
 // Types
-type HttpMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'PATCH';
-type HttpMethodWithBody = 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-type HttpMethodWithoutBody = 'GET' | 'HEAD' | 'OPTIONS';
+export type HttpMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS' | 'PATCH';
+export type HttpMethodWithBody = 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+export type HttpMethodWithoutBody = 'GET' | 'HEAD' | 'OPTIONS';
 
 type BodyType = 'json' | 'form' | 'text' | 'blob' | 'stream' | 'auto';
 type ResponseType = 'json' | 'text' | 'blob' | 'arrayBuffer' | 'formData' | 'auto';
@@ -363,6 +363,7 @@ async function executeRequest<T>(
         fetchOptions.body = serialized;
 
         // Set content type if not already specified and we have one
+        // @ts-ignore
         if (contentType && !fetchOptions.headers!['Content-Type'] && !fetchOptions.headers!['content-type']) {
           fetchOptions.headers = {
             ...fetchOptions.headers,
@@ -418,7 +419,7 @@ async function executeRequest<T>(
 
       // Apply response interceptors
       for (const interceptor of config.interceptors?.response || []) {
-        responseContext = await interceptor(responseContext);
+        responseContext = await interceptor(responseContext) as any
       }
 
       // Apply response middleware
@@ -649,7 +650,6 @@ export function createNetworkClient(config: NetworkClientConfig): NetworkClient 
 
 // Export types for consumers
 export type {
-  NetworkClient,
   NetworkClientConfig,
   ApiResponse,
   RequestError,
@@ -659,7 +659,6 @@ export type {
   BodyType,
   ResponseType,
   Middleware,
-  HttpMethod,
   RetryConfig,
   CacheConfig,
   RequestInterceptor,
@@ -667,36 +666,3 @@ export type {
 };
 
 export { NetworkError, SimpleCache };
-
-// Usage examples:
-/*
-const client = createNetworkClient({
-  baseUrl: 'https://api.example.com',
-  defaultBodyType: 'json', // Default behavior
-  defaultResponseType: 'auto' // Smart parsing
-});
-
-// JSON request (default behavior)
-await client.post('/users', { name: 'John', email: 'john@example.com' });
-
-// Form data
-await client.post('/upload', formData, {}, { type: 'form' });
-
-// Custom content type
-await client.post('/binary', buffer, {}, {
-  type: 'blob',
-  contentType: 'application/octet-stream'
-});
-
-// Plain text
-await client.post('/webhook', 'raw data', {}, { type: 'text' });
-
-// Expect specific response type
-await client.get<ArrayBuffer>('/download', { responseType: 'arrayBuffer' });
-
-// Raw response access
-const response = await client.get('/data');
-if (response.raw) {
-  const stream = response.raw.body; // Access raw ReadableStream
-}
-*/
