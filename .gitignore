@@ -139,3 +139,5 @@ test/
 
 dist
 node_modules
+.commit-message.md
+.readme.md
